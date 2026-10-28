@@ -1,24 +1,22 @@
 # RAG Evaluation and Ragas
 
-Evaluating retrieval-augmented generation means scoring retrieval and generation separately, so that a bad answer can be traced to the retriever or to the generator. This page covers exam objectives 3.1 and 3.2. It defines Ragas's core metrics and how the NeMo Agent Toolkit uses them.
-
-The metrics evaluate the pipelines built in [RAG Retrieval Pipelines](rag-retrieval-pipelines.md) and run inside the harness of [Agent Evaluation Pipelines](agent-evaluation-pipelines.md). Most are computed by an LLM judge, so the caveats in [LLM-as-Judge](llm-as-judge.md) apply.
+Evaluating retrieval-augmented generation means scoring retrieval and generation separately, so that a bad answer can be traced to the retriever or to the generator. The metrics evaluate the pipelines built in [RAG Retrieval Pipelines](rag-retrieval-pipelines.md), and most are computed by an LLM judge, so the caveats in [LLM-as-Judge](llm-as-judge.md) apply.
 
 ## Dimensions and metrics
 
-RAG quality has three independent parts **[web, arXiv 2309.15217 abstract]**:
+RAG quality has three independent parts **[web]**:
 - Did retrieval return relevant, focused context?
 - Is the answer faithful to that context?
 - Is the answer correct and relevant to the question?
 
-The Ragas paper proposes reference-free metrics for these dimensions, so evaluation does not depend on human-written ground truth. The Ragas documentation (read 2026-10-28) defines the core metrics as follows **[web]**:
+The Ragas paper proposes reference-free metrics for these dimensions, so evaluation does not depend on human-written ground truth. The Ragas documentation defines the core metrics as follows **[web]**:
 - **Faithfulness** = (claims in the response supported by the retrieved context) ÷ (total claims in the response).
 - **Context recall** (LLM variant) = (claims in the reference answer supported by the retrieved context) ÷ (total claims in the reference). The reference answer stands in for annotated reference contexts. A non-LLM variant counts the reference contexts that were retrieved.
 - **Context precision** averages precision@k over the ranked chunks, counting only the relevant ones. A relevant chunk ranked below an irrelevant one lowers the score.
 
-The documentation lists further metric families by name: Context Entities Recall, Noise Sensitivity and Response Relevancy; the NVIDIA metrics Answer Accuracy, Context Relevance and Response Groundedness; agent metrics; lexical metrics such as BLEU, ROUGE and exact match; and rubric metrics such as AspectCritic **[web, names only]**.
+The documentation lists further metric families by name: Context Entities Recall, Noise Sensitivity and Response Relevancy; the NVIDIA metrics Answer Accuracy, Context Relevance and Response Groundedness; agent metrics; lexical metrics such as BLEU, ROUGE and exact match; and rubric metrics such as AspectCritic **[web]**.
 
-The NeMo Agent Toolkit's evaluation guide recommends three NVIDIA metrics **[sourced]**:
+Inside the harness of [Agent Evaluation Pipelines](agent-evaluation-pipelines.md), the NeMo Agent Toolkit's evaluation guide recommends three NVIDIA metrics **[sourced]**:
 - `AnswerAccuracy` compares the answer with the ground truth.
 - `ContextRelevance` compares the retrieved context with the question.
 - `ResponseGroundedness` compares the answer with the retrieved context.
@@ -27,16 +25,14 @@ It also allows `FactualCorrectness` with keyword arguments **[sourced]**.
 
 ## Diagnosis
 
-The point of separate metrics is attribution **[inferred]**:
+The point of separate metrics is attribution. RAGChecker (Ru et al., arXiv 2408.08067) makes this explicit with separate retriever metrics (claim recall, context precision) and generator metrics (faithfulness, context utilisation, noise sensitivity, hallucination, self-knowledge), so low retriever scores implicate retrieval and good retrieval with poor generator scores implicates the generator **[web]**. Read with Ragas-style metrics:
 - **Low context relevance or recall** points at the retriever, chunking or embeddings.
 - **Good context but low faithfulness or groundedness** points at the generator's prompt or at hallucination.
 - **Faithful but inaccurate answers** suggest the corpus itself is wrong or stale.
 
-The study guide's DLI course for this objective, "Evaluating RAG and Semantic Search Systems", could not be read, so its syllabus is not represented here.
-
 ## Interview Q&A
 
-**How do you separate retriever failure from generator failure?** Score context relevance and recall separately from faithfulness, groundedness and answer accuracy **[inferred, sourced metric names]**.
+**How do you separate retriever failure from generator failure?** Score context relevance and recall separately from faithfulness, groundedness and answer accuracy. If the needed claims never reached the context, fix retrieval; if they did but the answer ignores or contradicts them, fix generation, the split RAGChecker formalises **[web]**.
 
 **Define faithfulness and context recall.** Faithfulness is the share of the answer's claims that the retrieved context supports. Context recall is the share of the reference answer's claims that the retrieved context supports **[web]**.
 
@@ -54,3 +50,4 @@ The study guide's DLI course for this objective, "Evaluating RAG and Semantic Se
 | 2026-10-28 | [Ragas: Faithfulness](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/) |
 | 2026-10-28 | [Ragas: Context Recall](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_recall/) |
 | 2026-10-28 | [Ragas: Context Precision](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/) |
+| 2026-10-28 | [RAGChecker: A Fine-grained Framework for Diagnosing RAG (Ru et al., arXiv 2408.08067)](https://arxiv.org/abs/2408.08067) |

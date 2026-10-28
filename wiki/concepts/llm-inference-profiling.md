@@ -1,8 +1,6 @@
 # LLM Inference Profiling
 
-Profiling an LLM service happens at two layers. Load generation measures latency and throughput as a user sees them. GPU and system traces then show where the time goes. This page covers exam objective 4.3: the metric definitions, the tools (AIPerf, which replaces GenAI-Perf and Perf Analyzer for LLMs; Nsight Systems; DCGM), and how agent traffic changes the method.
-
-Profiling measures engines such as [TensorRT-LLM](../components/tensorrt-llm.md) and clusters managed by [NVIDIA Dynamo](../components/nvidia-dynamo.md), with GPU metrics from [DCGM GPU Telemetry](../components/dcgm-gpu-telemetry.md). The findings feed [Agent Profiling and Result Analysis](agent-profiling-and-result-analysis.md) at the agent level and [Inference Cost and Availability](inference-cost-and-availability.md).
+Profiling an LLM service happens at two layers. Load generation measures latency and throughput as a user sees them. GPU and system traces then show where the time goes. The tools are AIPerf (which replaces GenAI-Perf and Perf Analyzer for LLMs), Nsight Systems and DCGM. This is the serving layer; the agent-level view of the same latency, broken down by step and tool, is in [Agent Profiling and Result Analysis](agent-profiling-and-result-analysis.md).
 
 ## Metrics
 
@@ -24,11 +22,11 @@ NVIDIA's blog of 2026-09-18 names AIPerf as the "designated successor" to GenAI-
 - **Load modes:** concurrency and request-rate modes with ramping and sweeps; constant, Poisson and gamma arrival patterns; and replay of traces in the Mooncake, Baseten and WEKA formats.
 - **GPU metrics:** collected through DCGM or pynvml, alongside the latency results.
 
-AIPerf's migration guide notes one difference for reasoning models. AIPerf's TTFT counts the first token of any type, so compare GenAI-Perf's TTFT with AIPerf's time to first output token **[web, snippet]**. The study guide's Triton material uses Perf Analyzer, which this supersedes for LLM workloads, as [Streaming and Real-Time Agent UX](streaming-and-realtime-agent-ux.md) notes. For agents, a single request is the wrong unit: real load is bursty, multi-step sessions, so replay traces or model concurrency at session level **[inferred]**.
+AIPerf's migration guide notes one difference for reasoning models. AIPerf's TTFT counts the first token of any type, so compare GenAI-Perf's TTFT with AIPerf's time to first output token **[web, snippet]**. The study guide's Triton material uses Perf Analyzer, which this supersedes for LLM workloads, as [Streaming and Real-Time Agent UX](streaming-and-realtime-agent-ux.md) notes. For agents, a single request is the wrong unit: real load is bursty, multi-step sessions, so replay traces or model concurrency at session level.
 
 ## Finding the bottleneck
 
-Nsight Systems gives a combined CPU and GPU timeline. It covers CUDA, cuBLAS, cuDNN and TensorRT activity; NVLink, PCIe and DRAM traffic; Tensor Core use; a multi-node view; and NVTX ranges **[sourced]**. TensorRT-LLM's performance-analysis guide explains how to bound a capture to a window of iterations, using `TLLM_PROFILE_START_STOP` with `nsys -c cudaProfilerApi`. It also explains how to add NVTX, GIL and garbage-collection markers, and optionally the PyTorch profiler **[sourced]**. For continuous fleet monitoring, DCGM's profiling fields and health checks are described on its own page. Its profiling conflicts with Nsight, so pause it while tracing **[sourced]**.
+Nsight Systems gives a combined CPU and GPU timeline. It covers CUDA, cuBLAS, cuDNN and TensorRT activity; NVLink, PCIe and DRAM traffic; Tensor Core use; a multi-node view; and NVTX ranges **[sourced]**. [TensorRT-LLM](../components/tensorrt-llm.md)'s performance-analysis guide explains how to bound a capture to a window of iterations, using `TLLM_PROFILE_START_STOP` with `nsys -c cudaProfilerApi`. It also explains how to add NVTX, GIL and garbage-collection markers, and optionally the PyTorch profiler **[sourced]**. For continuous fleet monitoring, DCGM's profiling fields and health checks are described in [DCGM GPU Telemetry](../components/dcgm-gpu-telemetry.md). Its profiling conflicts with Nsight, so pause it while tracing **[sourced]**.
 
 ## Interview Q&A
 
@@ -36,9 +34,9 @@ Nsight Systems gives a combined CPU and GPU timeline. It covers CUDA, cuBLAS, cu
 
 **Why did NVIDIA replace GenAI-Perf?** Its single-process client became the bottleneck at high concurrency because of the GIL, which skewed results **[web]**.
 
-**GPU utilisation is 90% but throughput is poor. Why?** Utilisation only says a kernel was resident. Check SM, tensor and DRAM activity, batch size, and CPU-side stalls in the timeline **[inferred]**.
+**GPU utilisation is 90% but throughput is poor. Why?** Utilisation only says a kernel was resident. Check SM, tensor and DRAM activity, batch size, and CPU-side stalls in the timeline.
 
-**How would you load-test an agent backend?** Replay recorded multi-step session traces with realistic arrival patterns, rather than firing independent single requests **[inferred, web]**.
+**How would you load-test an agent backend?** Replay recorded multi-step session traces with realistic arrival patterns, rather than firing independent single requests **[web]**.
 
 | Ingest Date | Source |
 | ----------- | ------ |

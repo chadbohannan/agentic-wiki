@@ -1,8 +1,6 @@
 # Model and Dataset Licensing
 
-Licences decide which models an organisation may serve, fine-tune and redistribute. Licence terms stack: a model derived from another carries both sets of terms. This page covers exam objective 9.5. It covers the NVIDIA Open Model License, the Llama 3.1 Community License, Gemma terms and Apache 2.0, and how they combine in NVIDIA's own safety models.
-
-Licence terms govern which models can be served through [NVIDIA NIM](../components/nvidia-nim.md) and adapted with the approaches in [RAG vs Fine-Tuning vs Continued Pretraining](rag-vs-fine-tuning-vs-pretraining.md). The safety models whose licences stack are in [NVIDIA Safety Models and garak](../components/nvidia-safety-models-and-garak.md), and the regulatory side, including the GPAI training-data summary, is in [EU AI Act](eu-ai-act.md).
+Licences decide which models an organisation may serve, fine-tune and redistribute. Licence terms stack: a model derived from another carries both sets of terms. This page covers the NVIDIA Open Model License, the Llama 3.1 Community License, Gemma terms and Apache 2.0, and how they combine in NVIDIA's own safety models. The questions arise whenever a team serves a model through [NVIDIA NIM](../components/nvidia-nim.md) or fine-tunes one, an option weighed in [RAG vs Fine-Tuning vs Continued Pretraining](rag-vs-fine-tuning-vs-pretraining.md).
 
 ## NVIDIA Open Model License
 
@@ -13,7 +11,7 @@ The NVIDIA Open Model License page (last modified 2025-10-24) gives these terms 
 - **Termination:** rights end if you bypass or circumvent a safety guardrail without a substantially similar replacement, or if you sue alleging the model infringes intellectual property.
 - **Redistribution:** requires a Notice file with attribution.
 
-The guardrail-bypass clause is unusual. It ties the licence directly to safety engineering: removing a model's guardrails without a replacement voids your right to use it **[inferred significance]**.
+The guardrail-bypass clause is unusual. It ties the licence directly to safety engineering: removing a model's guardrails without a replacement voids your right to use it.
 
 ## Llama 3.1 Community License
 
@@ -25,13 +23,13 @@ The Llama 3.1 Community License (2024-07-23) sets these terms **[web]**:
 
 ## How terms stack
 
-NVIDIA's safety models carry two licences each **[web, model cards]**:
+NVIDIA's safety models, described in [NVIDIA Safety Models and garak](../components/nvidia-safety-models-and-garak.md), carry two licences each **[web]**:
 - **Safety-Guard-8B-v3:** the NVIDIA Open Model License plus the Llama 3.1 Community License.
 - **Content-Safety-Reasoning-4B:** the NVIDIA licence plus the Gemma Terms of Use and Prohibited Use Policy.
 
-GLiNER-PII is under the NVIDIA Open Model License alone. Tools such as garak and NeMo Guardrails are Apache 2.0, a permissive licence with an explicit patent grant and attribution through a NOTICE file **[web; Apache properties from background]**.
+GLiNER-PII is under the NVIDIA Open Model License alone. Tools such as garak and NeMo Guardrails are Apache 2.0, a permissive licence with an explicit patent grant and attribution through a NOTICE file **[web]**.
 
-"Open weights" is not the same as "open source" in the Open Source Initiative's sense. The licence field on a model card is a legal claim, to be checked for each version. Dataset licences and data provenance are separate checks **[inferred]**. Licences not checked for this page: Llama 4 and later, the full Gemma terms, and the licences of individual datasets such as the Nemotron datasets.
+"Open weights" is not the same as "open source" in the Open Source Initiative's sense. The licence field on a model card is a legal claim, to be checked for each version. Dataset licences and data provenance are separate checks.
 
 ## Interview Q&A
 
@@ -41,7 +39,7 @@ GLiNER-PII is under the NVIDIA Open Model License alone. Tools such as garak and
 
 **What must I do if I fine-tune and release a Llama 3.1 model?** Begin its name with "Llama", include the licence, and display "Built with Llama" **[web]**.
 
-**Apache 2.0 versus the Llama licence?** Apache 2.0 is permissive and grants patent rights. The Llama licence adds a user threshold, an acceptable-use policy and naming rules **[inferred, web]**.
+**Apache 2.0 versus the Llama licence?** Apache 2.0 is permissive and grants patent rights. The Llama licence adds a user threshold, an acceptable-use policy and naming rules **[web]**.
 
 | Ingest Date | Source |
 | ----------- | ------ |

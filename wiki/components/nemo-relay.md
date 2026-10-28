@@ -1,8 +1,6 @@
 # NeMo Relay
 
-NVIDIA NeMo Relay is a runtime for observing and controlling agent runs. Its Rust core sits behind Python and Node.js bindings, and it works through a scope stack, middleware (intercepts and guardrails), plugins, and an event stream that can be exported to ATOF, ATIF, OpenTelemetry and OpenInference. It touches exam objectives 8.1, 8.2 and 8.5, although the September 2025 study guide predates it.
-
-The NeMo Agent Toolkit's migration guide names Relay as the successor for the toolkit's observability, middleware and governance functions, as described on the [NeMo Agent Toolkit](nemo-agent-toolkit.md) page **[web]**. Relay feeds the tracing practices in [Agent Observability and Tracing](../concepts/agent-observability-tracing.md). Its guardrail middleware complements policy rails such as [NeMo Guardrails](nemo-guardrails.md).
+NVIDIA NeMo Relay is a runtime for observing and controlling agent runs. Its Rust core sits behind Python and Node.js bindings, and it works through a scope stack, middleware (intercepts and guardrails), plugins, and an event stream that can be exported to ATOF, ATIF, OpenTelemetry and OpenInference. The September 2025 study guide predates it, but the migration guide of the deprecated [NeMo Agent Toolkit](nemo-agent-toolkit.md) names Relay as the successor for its observability, middleware and governance functions **[web]**, so it is where NVIDIA's answer to [Agent Observability and Tracing](../concepts/agent-observability-tracing.md) now lives.
 
 ## Architecture
 
@@ -14,7 +12,7 @@ NVIDIA's documentation says Relay "helps you observe and control what happens in
 - **A canonical, parent-linked event stream.**
 - **An asynchronous subscriber dispatcher**, so that publishing events never delays the real call.
 
-The documentation read was v0.11.0, the latest on 2026-10-28. Relay is pre-1.0, so its interfaces may change **[web]**.
+As of 2026-10-28 the latest documentation is v0.11.0. Relay is pre-1.0, so its interfaces may change **[web]**.
 
 ## Event formats
 
@@ -23,7 +21,7 @@ Relay has four outputs **[web]**:
 - **ATIF** (Agent Trajectory Interchange Format) trajectories are generated from completed runs, for replay, analysis and evaluation.
 - **OpenTelemetry (OTLP)** and **OpenInference** exporters feed standard backends.
 
-The pages read do not name Phoenix or Langfuse, but OTLP and OpenInference output is the compatible path to both **[inferred]**.
+The documentation does not name Phoenix or Langfuse, but OTLP and OpenInference output is the compatible path to both.
 
 ## Middleware and governance
 
@@ -42,15 +40,15 @@ The execution order is:
 
 Failure behaviour differs by kind. Guardrails and request and execution intercepts fail closed: the callback does not run. A failing sanitiser clears the affected observability fields. Metadata injectors fail open. Middleware can be registered globally, locally to a scope (removed when the scope closes), or by a plugin. Standard credential headers are stripped from the event copy before sanitisers run, but custom header names need a sanitiser of your own. A guardrail that rejects a call emits a rejection mark and skips the start and end events **[web]**.
 
-A search snippet of the documentation's navigation lists further features **[web, snippet; partly confirmed]**:
-- a NeMo Guardrails plugin;
+The documentation's navigation lists further features **[web, snippet]**:
+- a plugin for [NeMo Guardrails](nemo-guardrails.md), so policy rails and Relay's own guardrails can run in one middleware chain; on the Guardrails side, a hooks server not yet in a release answers Relay's pre-tool-call check with allow or deny;
 - an Adaptive plugin with an Adaptive Cache Governor;
 - integrations for LangChain, LangGraph and Deep Agents;
 - CLI integration for coding agents.
 
 ## Why it matters
 
-For objectives 8.1 and 8.2, Relay provides a framework-independent trace and event source at the runtime level, including calls that were rejected. For 8.5, sanitisers minimise the personal data that reaches telemetry, and guardrails enforce budgets and policies while leaving audit marks **[inferred]**.
+Relay provides a framework-independent trace and event source at the runtime level, including calls that were rejected. Sanitisers minimise the personal data that reaches telemetry, and guardrails enforce budgets and policies while leaving the marks an [audit trail](../concepts/audit-trails-and-traceability.md) needs.
 
 ## Interview Q&A
 
@@ -69,3 +67,4 @@ For objectives 8.1 and 8.2, Relay provides a framework-independent trace and eve
 | 2026-10-28 | [NeMo Relay architecture](https://docs.nvidia.com/nemo/relay/about-nemo-relay/architecture) |
 | 2026-10-28 | [NeMo Relay middleware concepts](https://docs.nvidia.com/nemo/relay/about-nemo-relay/concepts/middleware) |
 | 2026-10-28 | [NeMo Agent Toolkit migration guide](https://docs.nvidia.com/aiqtoolkit/latest/resources/migration-guide.html) |
+| 2026-10-28 | [NeMo Guardrails (develop): NeMo Relay hooks](https://github.com/NVIDIA-NeMo/Guardrails/blob/develop/docs/run-rails/using-hooks-server/nemo-relay.mdx) |

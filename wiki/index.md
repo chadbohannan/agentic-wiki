@@ -1,83 +1,109 @@
 # Wiki Index
 
-Entries carry exam objective IDs from the NCP-AAI study guide in parentheses. All ten blueprint sections are ingested at least once; see [exam-blueprint](syntheses/exam-blueprint.md) for coverage, known weak spots and study-guide errors, and `../TODO.md` for open gaps.
-
-## Concepts
-- [Agent Architecture Patterns](concepts/agent-architecture-patterns.md) (1.2, 1.6, 1.8) — Reactive vs deliberative vs hybrid agent designs, and workflow-vs-agent choices for LLM systems
-- [Agent Benchmarks](concepts/agent-benchmarks.md) (3.1, 3.2) — The public task benchmarks for agents (SWE-bench, tau-bench, GAIA, AgentBench, BFCL), what each measures, and their limits
-- [Agent Error Handling and Resilience](concepts/agent-error-handling-resilience.md) (2.4) — Retry with backoff and jitter, timeouts, circuit breakers, fallbacks and graceful degradation applied to LLM agents and their tools
-- [Agent Evaluation Pipelines](concepts/agent-evaluation-pipelines.md) (3.1, 3.2, 3.5) — How to build offline and online evaluation for agents: datasets, graders, trajectory vs outcome scoring, repeated trials, regression gating
-- [Agent Failure Diagnosis](concepts/agent-failure-diagnosis.md) (8.2) — Finding root cause of agent failures by combining traces, logs, error taxonomies and replay, from the engine level (CUDA, shapes, NCCL) up to orchestration and inter-agent failures
-- [Agent Feedback Loops](concepts/agent-feedback-loops.md) (3.3, 3.5) — Capturing explicit and implicit user feedback and routing it into evals and improvement (data flywheel)
-- [Agent Memory (Short- and Long-Term)](concepts/agent-memory.md) (1.4, 5.1) — Short-term (context/thread state) vs long-term (episodic, semantic, procedural) memory for agents
-- [Agent MLOps and CI/CD](concepts/agent-mlops-cicd.md) (4.2) — Applying CI/CD to agents: versioned prompts, models and tools; eval gates; shadow and canary rollout; monitoring and governance
-- [Agent Observability and Tracing](concepts/agent-observability-tracing.md) (8.1, 8.2) — Agent observability = recording each run as a trace of nested spans (agent, LLM call, tool call, retrieval) with metadata, so that behavior can be monitored, debugged and evaluated
-- [Agent Oversight UI Design](concepts/agent-oversight-ui-design.md) (10.1) — Oversight UIs make agent state legible and controllable through trace views, plan previews, permission prompts, undo, and stop controls, and their design must counter over-reliance rather than just collect clicks
-- [Agent Profiling and Result Analysis](concepts/agent-profiling-and-result-analysis.md) (3.2, 3.4, 3.5) — Reading evaluation and profiler outputs to find the bottleneck, compare models/configs, and decide what to optimize
-- [Agent Protocols: MCP, A2A, AG-UI](concepts/agent-protocols-mcp-a2a.md) (1.3) — MCP connects agents to tools/data, A2A connects agents to agents, AG-UI connects agents to users
-- [Agent Security Threats and Controls](concepts/agent-security-threats-and-controls.md) (9.1) — How agents get attacked (direct and indirect prompt injection, tool poisoning, excessive agency, confused-deputy MCP flaws) and the controls that actually bound damage: least privilege, sandboxing, action gating in code, and breaking the "lethal trifecta"
-- [Agent Transparency and Explainability](concepts/agent-transparency-and-traceability.md) (10.3) — Transparency for agents has three separate layers - what the agent did (traces and audit logs), why (explanations, which reasoning traces only partly provide), and what it is (disclosure, documentation) - and chain-of-thought text is not a faithful explanation by default
-- [Decision Models](concepts/decision-models.md) (1.x, 3.4, 9.x; post-guide) — Typed-probability "System One" models (TypeSafe Jev, Cloudflare Clef, CLM-8B, Strands Decider) for routing, triage and guardrail decisions without text generation; vendor claims, conflicts and security findings
-- [Tuning Agents for Accuracy, Latency and Cost](concepts/agent-tuning-accuracy-latency-cost.md) (3.4, 3.5) — The levers for trading accuracy against latency and cost: sampling parameters, prompts, model routing, distillation/quantization, caching, test-time compute, and automated optimizers
-- [Agent Uptime, Transparency and Trust](concepts/agent-uptime-transparency-trust.md) (8.5) — Keeping agents available and earning user and auditor trust through SLOs/status reporting, audit trails, disclosure of AI use and limits, human oversight, and privacy-aware telemetry
-- [AI Risk Frameworks and Standards](concepts/ai-risk-frameworks-and-standards.md) (9.5, 9.1) — Voluntary frameworks and standards used to organize AI governance: NIST AI RMF and its generative AI profile, ISO/IEC 42001, IEEE 7000 series and Ethically Aligned Design
-- [Audit Trails and Traceability](concepts/audit-trails-and-traceability.md) (9.1) — What to log for an agent (prompts, retrieved context, tool calls with arguments, identities, approvals, guardrail decisions), why identity propagation matters, and how audit requirements arise from regulation
-- [Bias and Toxicity Mitigation](concepts/bias-and-toxicity-mitigation.md) (9.3) — Measuring and reducing toxic output and biased behavior across the lifecycle (data, model, guardrail, evaluation), with NVIDIA safety classifiers, garak probes and IEEE 7003
-- [Chain-of-Thought and Task Decomposition](concepts/chain-of-thought-and-task-decomposition.md) (5.2) — Eliciting intermediate reasoning steps (CoT) and breaking goals into sub-problems (least-to-most, plan-and-solve, ToT/GoT) to improve multi-step accuracy at higher token cost
-- [Continuous Regression Benchmarking](concepts/continuous-regression-benchmarking.md) (8.3) — Re-running a fixed benchmark and online comparisons on every change (and on a schedule) to catch regressions against the previous version before and after rollout
-- [Disaggregated Serving and KV-Aware Routing](concepts/disaggregated-serving-and-kv-routing.md) (4.1, 4.5) — Splitting LLM inference into compute-bound prefill and memory-bound decode pools and routing by KV-cache reuse, and why this matters for agent workloads
-- [Document Ingestion and ETL](concepts/document-ingestion-etl.md) (6.3, 6.4) — Enterprise RAG needs an ETL layer that parses PDFs/Office files/images/audio into structured, metadata-rich chunks, embeds them, writes to a vector store and keeps them fresh
-- [EU AI Act](concepts/eu-ai-act.md) (9.5) — The adopted Regulation (EU) 2024/1689: risk tiers, GPAI obligations, and the application timeline as amended by the 2026 digital omnibus (with stated verification limits)
-- [FDA AI-Enabled Medical Devices](concepts/fda-ai-enabled-medical-devices.md) (9.5) — How FDA regulates AI/ML in medical devices (list of authorized AI-enabled devices, GMLP/PCCP/transparency principles, the draft lifecycle guidance) and what is unconfirmed
-- [Human-Agent Interaction UIs](concepts/human-agent-interaction-uis.md) (1.1) — UI layers and protocols that let humans observe, steer, and approve agent work
-- [Human-in-the-Loop Patterns](concepts/human-in-the-loop-patterns.md) (10.1) — Human-in-the-loop (HITL) for agents means inserting a pause where a person approves, edits, answers or rejects before the agent proceeds, implemented as approval gates, interrupts with resume, elicitation, and risk- or confidence-based escalation
-- [Human Oversight and Accountability](concepts/human-oversight-and-accountability.md) (10.4) — Meaningful oversight requires a trained, empowered human with time, information and authority to override, and must address automation bias; accountability assigns responsibility for agent actions to named people and processes
-- [Inference Cost and Availability](concepts/inference-cost-and-availability.md) (4.5) — Levers for cost per token vs availability: precision, batching, speculative decoding, routing across models, caching, scaling policy and spot capacity
-- [Knowledge Graphs and GraphRAG](concepts/knowledge-graphs-graphrag.md) (1.7) — Knowledge graphs give agents structured entities/relations; GraphRAG uses them for global, multi-hop questions
-- [Kubernetes GPU Inference Deployment](concepts/kubernetes-gpu-inference-deployment.md) (4.1, 4.4, 4.5) — How to run containerized LLM/agent services on Kubernetes with GPU scheduling, metric-driven autoscaling, and model-aware load balancing
-- [Layered Safety and Escalation](concepts/layered-safety-and-escalation.md) (9.4, 9.2) — Defense in depth for agents: pre-LLM filters, dialog constraints, tool-call validation, output checks, monitoring, and human escalation, with measurable topic adherence
-- [LLM Agent Planning](concepts/llm-agent-planning.md) (5.3) — Planning = producing and revising multi-step action sequences; taxonomy of decomposition, plan selection, external planners, reflection, memory
-- [LLM-as-Judge](concepts/llm-as-judge.md) (3.1, 3.5) — Using an LLM to score outputs: setup, known biases, calibration, and how NAT/Ragas/NVIDIA wire it
-- [LLM Inference Optimization](concepts/llm-inference-optimization.md) (7.4) — Why LLM serving is bound by memory bandwidth and KV cache, and the techniques (batching, paged KV, FlashAttention, GQA, quantization, speculative decoding, parallelism, disaggregation) used to improve latency and throughput
-- [LLM Inference Profiling](concepts/llm-inference-profiling.md) (4.3) — Measuring serving performance under load (AIPerf/GenAI-Perf, Perf Analyzer), then locating bottlenecks (Nsight Systems, DCGM, Prometheus)
-- [LLM Reliability Metrics and SLOs](concepts/llm-reliability-metrics-slos.md) (8.1) — What to put on an agent dashboard: serving latency (TTFT, inter-token latency, E2E), throughput, error and rate-limit rates, task success, cost per task, tool-call validity, and quality/drift signals, with SLOs set per tier
-- [Model and Data Drift Monitoring](concepts/model-and-data-drift-monitoring.md) (8.1, 8.4) — Detecting when production inputs, predictions or quality diverge from what the system was built and validated on, and deciding when to retrain or adapt
-- [Model and Dataset Licensing](concepts/model-and-dataset-licensing.md) (9.5) — Reading licenses for open-weight models, datasets and tools: NVIDIA Open Model License, Llama Community License, Gemma terms, Apache-2.0, and how they stack on derived safety models
-- [Multi-Agent Orchestration](concepts/multi-agent-orchestration.md) (1.5) — Supervisor, hierarchical, decentralized and federated multi-agent topologies and the frameworks that implement them
-- [Multimodal Agents](concepts/multimodal-agents.md) (2.2) — Using vision/audio/document-capable models and multimodal retrieval inside agents, with NVIDIA NIM/Nemotron examples
-- [Privacy and PII Protection](concepts/privacy-and-pii-protection.md) (9.2) — Detecting, masking and minimizing personal data in agent inputs, retrieved context, outputs and logs, with NVIDIA GLiNER-PII and NeMo Guardrails PII rails
-- [Prompt and Model Versioning and Rollback](concepts/prompt-and-model-versioning-rollback.md) (8.4) — Treating prompts, model pins, tool schemas and configs as versioned, promotable, reversible artifacts, with the deployed combination recorded on every trace
-- [Prompt Engineering and Chains](concepts/prompt-engineering-and-chains.md) (2.1) — Designing prompts (zero/few-shot, CoT, p-tuning) and composing them into static or dynamic chains; now framed as context engineering
-- [RAG Evaluation and Ragas](concepts/rag-evaluation-ragas.md) (3.1, 3.2) — Evaluating retrieval-augmented generation along retrieval and generation dimensions with Ragas metrics, and the NAT integration
-- [RAG Retrieval Pipelines](concepts/rag-retrieval-pipelines.md) (6.1, 1.7) — RAG retrieves external passages at query time and conditions generation on them; production quality depends on chunking, hybrid dense+sparse retrieval, fusion, reranking and query rewriting, and agentic variants add planning and reflection
-- [RAG vs Fine-Tuning vs Continued Pretraining](concepts/rag-vs-fine-tuning-vs-pretraining.md) (6.1, 6.4) — Retrieval injects knowledge at inference; fine-tuning and continued pretraining change weights; evidence says retrieval is more reliable for facts, fine-tuning for style/behaviour/format, and hybrids (RAFT) combine them
-- [ReAct: Reasoning and Acting](concepts/react-reasoning-action.md) (1.2) — ReAct interleaves reasoning traces and tool actions; foundation of most tool-calling agents
-- [Refining Agent Decision-Making](concepts/refining-agent-decision-making.md) (2.6) — Measuring and improving how agents choose actions and tools: trajectory evaluation, LLM-as-judge, evaluator-optimizer loops, tool/prompt iteration, and NAT's eval/optimizer/profiler
-- [Reflection and Feedback Adaptation](concepts/reflection-and-feedback-adaptation.md) (5.5) — Agents adapt reasoning via in-loop self-critique (Self-Refine, Reflexion), stored lessons (episodic/skill memory), and offline learning from reward/feedback (RLHF/GRPO via NeMo RL, data flywheel)
-- [Stateful Orchestration](concepts/stateful-orchestration.md) (1.6, 5.4) — Graph-based stateful workflows with checkpointing, persistence and human-in-the-loop, as in LangGraph
-- [Streaming and Real-Time Agent UX](concepts/streaming-and-realtime-agent-ux.md) (2.5) — Streaming tokens, tool-call progress and intermediate steps to keep conversational agents responsive; plus latency tuning of the serving layer
-- [Structured Data Access and Text-to-SQL](concepts/structured-data-access-text-to-sql.md) (6.5) — Agents reach structured data by generating validated queries (text-to-SQL) or calling typed tools, and combine it with unstructured retrieval; freshness comes from querying live systems or streaming updates
-- [Structured Human Feedback and the Data Flywheel](concepts/structured-human-feedback-and-data-flywheel.md) (10.2) — Structured feedback turns human reactions (ratings, corrections, preferences, annotations) into versioned data that feeds evals and training, and NVIDIA's data flywheel packages this as a six-step loop on NeMo microservices
-- [Structured Outputs](concepts/structured-outputs.md) (2.3, 2.4) — Forcing LLM output to match a schema (JSON mode vs schema-constrained decoding) so downstream code and tools can trust it
-- [Synthetic Data for Evaluation](concepts/synthetic-data-for-evaluation.md) (3.1, 3.3) — Generating test sets and simulated users to bootstrap evals, and NVIDIA Data Designer
-- [Tool Calling and MCP](concepts/tool-calling-and-mcp.md) (2.3) — Defining custom tools/APIs for agents: function-calling schemas, tool_choice, parallel calls, MCP as the standard integration protocol, and tool design for reliability
-- [Vector Databases and ANN Tuning](concepts/vector-databases-and-ann-tuning.md) (6.2) — Vector stores serve approximate nearest-neighbour search; index family (HNSW, IVF, PQ, graph on GPU) and parameters set the recall/latency/memory trade-off, and filtering interacts badly with ANN unless handled
-
-## Components
-- [AI-Q Blueprint](components/ai-q-blueprint.md) (4.1) — NVIDIA's open reference blueprint for a long-horizon research agent (shallow and deep research agents behind an intent router) built on NeMo Agent Toolkit and LangChain Deep Agents, with Docker Compose and Helm deployment paths
-- [DCGM GPU Telemetry](components/dcgm-gpu-telemetry.md) (4.3, 4.4) — DCGM and dcgm-exporter as the GPU metrics source for Kubernetes monitoring and autoscaling
-- [NeMo Agent Toolkit (and its deprecation)](components/nemo-agent-toolkit.md) (2.3, 2.4, 2.6, 7.3) — NVIDIA's framework-agnostic toolkit for building, connecting, evaluating and profiling agent workflows; renamed twice and now flagged deprecated
-- [NeMo Evaluator and Helix Evaluation](components/nemo-evaluator-and-helix-eval.md) (3.1, 3.2, 3.4) — NVIDIA's evaluation/optimization stack as of Oct 2026: NAT eval/profiler/optimizer (deprecated), Helix, NeMo Evaluator, Switchyard, Data Designer
-- [NeMo Guardrails](components/nemo-guardrails.md) (7.1, 9.2, 9.4) — Open-source (Apache-2.0) Python toolkit and companion microservice that wraps LLM apps with programmable input, dialog, retrieval, execution and output rails, defined in YAML plus Colang
-- [NeMo Relay](components/nemo-relay.md) (8.1, 8.2, 8.5) — NVIDIA NeMo Relay is a Rust-core runtime with Python/Node bindings that observes and controls agent runs through a scope stack, middleware (intercepts and guardrails), plugins, and an event stream exportable to ATOF, ATIF, OpenTelemetry and OpenInference
-- [NVIDIA NIM Operator](components/nim-operator.md) (4.1, 4.4) — Kubernetes operator that deploys and manages NIM microservices via CRDs, including caching, autoscaling and rollouts
-- [NVIDIA Data Flywheel Blueprint](components/nvidia-data-flywheel-blueprint.md) (8.4) — A reference NeMo-microservices pipeline that mines production prompt/response logs to find, fine-tune and evaluate smaller models that match a larger one; deprecated by NVIDIA as of April 2026 per its README
-- [NVIDIA Dynamo](components/nvidia-dynamo.md) (4.1, 4.3, 4.4, 4.5) — NVIDIA's open-source datacenter-scale inference orchestration layer that sits above vLLM, SGLang and TensorRT-LLM, adding disaggregated serving, KV-aware routing, KV offload, and SLA-driven autoscaling
-- [NVIDIA NIM](components/nvidia-nim.md) (7.2, 7.5) — NVIDIA NIM = containerized, optimized inference microservices exposing OpenAI-compatible APIs, selecting engine/profile per GPU. Objectives 7.2, 7.5 (also 2.3, 2.5)
-- [NVIDIA Safety Models and garak](components/nvidia-safety-models-and-garak.md) (9.2, 9.3, 9.4) — The NVIDIA model-based safety toolchain around NeMo Guardrails: Nemotron/NemoGuard content safety, topic control, jailbreak detection, GLiNER-PII, and the garak scanner
-- [TensorRT-LLM](components/tensorrt-llm.md) (4.3, 4.5, 7.4) — NVIDIA's LLM inference library: optimized kernels, quantization (FP8/FP4), speculative decoding, parallelism and disaggregated serving, now PyTorch-based
-- [Triton Inference Server (Dynamo-Triton)](components/triton-inference-server.md) (7.4) — General multi-framework inference server (now branded Dynamo-Triton) with dynamic batching, ensembles, backends and Perf Analyzer
+Pages are grouped by the seven parts of an agent set out in [Anatomy of an Agent](syntheses/agent-anatomy.md): model, context, tools, loop and harness, memory and state, environment, and control and observation, followed by governance, which sits outside the agent. Concept and component pages share each group; components are NVIDIA products and live under `components/`. Exam objective IDs from the NCP-AAI study guide are in parentheses; [NCP-AAI Exam Blueprint](syntheses/exam-blueprint.md) maps objectives to pages and records the guide's errors, and `../TODO.md` lists open gaps.
 
 ## Syntheses
-- [NCP-AAI Exam Blueprint](syntheses/exam-blueprint.md) — NVIDIA's Agentic AI Professional certification (NCP-AAI) organizes the field into ten topic areas
+- [Anatomy of an Agent](syntheses/agent-anatomy.md) — The conceptual spine: the seven parts, how each fails, where a responsibility should live, and diagnosing a failure by part
+- [NVIDIA Agentic Stack](syntheses/nvidia-agentic-stack.md) — One agent request traced through NVIDIA's layers, plus every product's status and lineage as of October 2026
+- [NCP-AAI Exam Blueprint](syntheses/exam-blueprint.md) — The ten exam sections mapped to wiki pages, with weight discrepancies and broken study-guide references
 
+## 1. Model
+
+### Choosing and adapting the model
+- [Chain-of-Thought and Task Decomposition](concepts/chain-of-thought-and-task-decomposition.md) (5.2) — CoT, self-consistency, least-to-most, ToT/GoT, reasoning models and test-time compute
+- [Decision Models](concepts/decision-models.md) (post-guide) — Typed-probability models (Jev, Clef, CLM-8B) for routing and gating; vendor claims and security findings
+- [RAG vs Fine-Tuning vs Continued Pretraining](concepts/rag-vs-fine-tuning-vs-pretraining.md) (6.1, 6.4) — Retrieval for facts, fine-tuning for behaviour, and RAFT as the hybrid
+
+### Serving the model
+- [LLM Inference Optimization](concepts/llm-inference-optimization.md) (7.4) — Why decode is memory-bound, and batching, paged KV, quantisation, speculative decoding and parallelism
+- [LLM Inference Profiling](concepts/llm-inference-profiling.md) (4.3) — TTFT, ITL and throughput; AIPerf load tests; Nsight and DCGM traces
+- [Disaggregated Serving and KV-Aware Routing](concepts/disaggregated-serving-and-kv-routing.md) (4.1, 4.5) — Splitting prefill from decode and routing by cache overlap, and why agents benefit
+- [Kubernetes GPU Inference Deployment](concepts/kubernetes-gpu-inference-deployment.md) (4.1, 4.4, 4.5) — GPU scheduling, autoscaling on queue or KV signals, and model-aware load balancing
+- [Inference Cost and Availability](concepts/inference-cost-and-availability.md) (4.5) — FP8/FP4, batching, routing and spot capacity against headroom, redundancy and fallback
+- [NVIDIA NIM](components/nvidia-nim.md) (7.2, 7.5) — Model containers with OpenAI-compatible APIs that pick a vLLM, SGLang or TensorRT-LLM profile per GPU
+- [TensorRT-LLM](components/tensorrt-llm.md) (4.3, 4.5, 7.4) — NVIDIA's inference engine: kernels, FP8/FP4, speculative decoding, now a PyTorch runtime
+- [NVIDIA Dynamo](components/nvidia-dynamo.md) (4.1, 4.3, 4.4, 4.5) — Cluster orchestration above the engines: disaggregation, KV-aware routing, KV offload, SLA autoscaling
+- [Triton Inference Server (Dynamo-Triton)](components/triton-inference-server.md) (7.4) — The general multi-framework server: backends, dynamic and sequence batching, ensembles
+- [NVIDIA NIM Operator](components/nim-operator.md) (4.1, 4.4) — Kubernetes CRDs that cache, deploy, autoscale and upgrade NIMs
+- [DCGM GPU Telemetry](components/dcgm-gpu-telemetry.md) (4.3, 4.4) — GPU health and utilisation metrics, exported to Prometheus for monitoring and autoscaling
+
+## 2. Context
+
+### Shaping the window
+- [Context Engineering](concepts/context-engineering.md) (2.1, 1.4) — Context as an attention budget; prompting techniques and p-tuning; just-in-time retrieval, write/select/compress/isolate, compaction, notes, sub-agents and KV-cache-aware design
+- [Structured Outputs](concepts/structured-outputs.md) (2.3, 2.4) — JSON mode versus schema-constrained decoding, NIM's guided decoding, and why valid shape is not truth
+- [Multimodal Agents](concepts/multimodal-agents.md) (2.2, 7.5) — Getting images, audio and video into the loop: token budgets, multimodal RAG, NIM media limits and VLM tool calling, Speech NIM, the voice agent blueprint and VSS video chunking
+
+### Retrieval
+- [RAG Retrieval Pipelines](concepts/rag-retrieval-pipelines.md) (6.1, 1.7) — Chunking, hybrid search, reranking, query rewriting, agentic RAG, and the NVIDIA RAG Blueprint
+- [Vector Databases and ANN Tuning](concepts/vector-databases-and-ann-tuning.md) (6.2) — HNSW, IVF and PQ trade-offs, tuning, filtered search, Milvus and GPU indexing with CAGRA
+- [Document Ingestion and ETL](concepts/document-ingestion-etl.md) (6.3, 6.4) — Parsing documents into chunks with NV-Ingest, freshness through CDC, and data-quality checks
+- [Knowledge Graphs and GraphRAG](concepts/knowledge-graphs-graphrag.md) (1.7) — GraphRAG for global, multi-hop questions, and temporal graphs as agent memory
+- [Structured Data Access and Text-to-SQL](concepts/structured-data-access-text-to-sql.md) (6.5) — Text-to-SQL versus typed tools, BIRD accuracy, safeguards, and routing between stores
+
+## 3. Tools
+- [Tool Calling and MCP](concepts/tool-calling-and-mcp.md) (2.3) — Function-calling mechanics, Anthropic's tool-design rules, the MCP tools specification, and loop limits
+- [Agent Protocols: MCP, A2A, AG-UI](concepts/agent-protocols-mcp-a2a.md) (1.3) — The three-protocol stack: agent-to-tool, agent-to-agent, agent-to-user; versions and governance
+
+## 4. Loop and harness
+- [Agent Architecture Patterns](concepts/agent-architecture-patterns.md) (1.2, 1.6, 1.8, 2.1) — Workflows versus agents, Anthropic's five workflow patterns as static and dynamic chains, and reactive, deliberative and hybrid designs
+- [ReAct and the Agent Loop](concepts/react-reasoning-action.md) (1.2) — The paper, the loop as built with native tool calls, harnesses, stopping budgets, failure modes and variants
+- [LLM Agent Planning](concepts/llm-agent-planning.md) (5.3) — Five planning families, interleaved versus up-front planning (ReAct vs ReWOO), and external PDDL planners
+- [Reflection and Feedback Adaptation](concepts/reflection-and-feedback-adaptation.md) (5.5) — In-context self-critique (Self-Refine, Reflexion) versus weight-level RL, and why reflection needs external signals
+- [Multi-Agent Orchestration](concepts/multi-agent-orchestration.md) (1.5) — Supervisor, hierarchical, decentralised and federated topologies, their costs, and the frameworks implementing them
+- [Agent Error Handling and Resilience](concepts/agent-error-handling-resilience.md) (2.4) — Retries with backoff, idempotency, circuit breakers, fallbacks, and agent-specific failure classes
+- [Streaming and Real-Time Agent UX](concepts/streaming-and-realtime-agent-ux.md) (2.5) — What to stream, LangGraph stream modes, and streaming's conflicts with retries and guardrails
+- [NeMo Agent Toolkit (and its deprecation)](components/nemo-agent-toolkit.md) (2.3, 2.4, 2.6, 7.3) — The exam's agent framework: YAML workflows, agent types, eval and profiler; deprecated October 2026
+- [AI-Q Blueprint](components/ai-q-blueprint.md) (4.1) — NVIDIA's research agent: intent router, shallow and deep agents, Compose and Helm deployment
+
+## 5. Memory and state
+- [Agent Memory (Short- and Long-Term)](concepts/agent-memory.md) (1.4, 5.1) — Context-window versus episodic, semantic and procedural memory; MemGPT, Mem0, Zep; NVIDIA's implementations
+- [Stateful Orchestration](concepts/stateful-orchestration.md) (1.6, 5.4) — Graph runtimes with checkpointed state for loops, pauses and recovery, using LangGraph persistence
+
+## 6. Environment
+- [Agent Security Threats and Controls](concepts/agent-security-threats-and-controls.md) (9.1) — Prompt injection, tool poisoning and the lethal trifecta, with controls ranked by reliability
+
+The environment is the wiki's thinnest part: sandboxing and execution environments have no page of their own yet, and are treated only inside the anatomy synthesis and the security page.
+
+## 7. Control and observation
+
+### Guardrails and safety
+- [Layered Safety and Escalation](concepts/layered-safety-and-escalation.md) (9.4, 9.2) — Defence in depth from cheap filters to human escalation, failing closed, and topic adherence
+- [Privacy and PII Protection](concepts/privacy-and-pii-protection.md) (9.2) — Where personal data enters and leaves an agent, GLiNER-PII, and minimisation principles
+- [Bias and Toxicity Mitigation](concepts/bias-and-toxicity-mitigation.md) (9.3) — Lifecycle mitigation, NVIDIA safety classifiers, garak probes, and IEEE 7003
+- [NeMo Guardrails](components/nemo-guardrails.md) (7.1, 9.2, 9.4) — Programmable rails configured in `config.yml` and Colang 1.0/2.0; LLMRails vs the faster IORails engine; parallel rails and speculative generation
+- [NVIDIA Safety Models and garak](components/nvidia-safety-models-and-garak.md) (9.2, 9.3, 9.4) — Content-safety, topic, jailbreak and PII classifiers, and the garak vulnerability scanner
+
+### Human oversight
+- [Human-in-the-Loop Patterns](concepts/human-in-the-loop-patterns.md) (10.1) — Approval gates, interrupts with resume, MCP elicitation, and risk-based escalation as implemented today
+- [Agent Interfaces and Oversight UI](concepts/agent-interfaces-and-oversight.md) (1.1, 10.1) — AG-UI, Article 14's checklist turned into interface features, and approval fatigue
+- [Agent Transparency and Explainability](concepts/agent-transparency-and-explainability.md) (10.3, 8.5) — Why chain-of-thought is not a faithful explanation, and Article 50 disclosure duties
+- [Human Oversight and Accountability](concepts/human-oversight-and-accountability.md) (10.4) — Meaningful oversight, automation bias, and assigning accountability to people
+
+### Observation
+- [Agent Observability and Tracing](concepts/agent-observability-tracing.md) (8.1, 8.2) — Runs as traces of spans, OpenTelemetry GenAI conventions, instrumentation points and backends
+- [LLM Reliability Metrics and SLOs](concepts/llm-reliability-metrics-slos.md) (8.1, 8.5) — Serving, agent and quality metrics for dashboards, alerting, and per-tier SLOs
+- [Agent Failure Diagnosis](concepts/agent-failure-diagnosis.md) (8.2) — A top-down method, the MAST multi-agent taxonomy, replay, and engine-level failures
+- [Model and Data Drift Monitoring](concepts/model-and-data-drift-monitoring.md) (8.1, 8.4) — Classical drift types translated to LLM agents, where ground truth is usually missing
+- [Audit Trails and Traceability](concepts/audit-trails-and-traceability.md) (9.1, 8.5) — What to log, identity propagation, Relay's audit features, and AI Act Articles 12 and 19
+- [NeMo Relay](components/nemo-relay.md) (8.1, 8.2, 8.5) — The toolkit's observability successor: scope stack, fail-closed middleware, and ATOF/ATIF/OTLP export
+
+### Evaluation and improvement
+- [Agent Evaluation Pipelines](concepts/agent-evaluation-pipelines.md) (3.1, 3.2, 3.5, 2.6) — Tasks, trials and graders; trajectory scoring and tool-choice checks; pass@k vs pass^k; capability versus regression suites
+- [LLM-as-Judge](concepts/llm-as-judge.md) (3.1, 3.5) — Judge agreement with humans, known biases, calibration, and the toolkit's judge metrics
+- [RAG Evaluation and Ragas](concepts/rag-evaluation-ragas.md) (3.1, 3.2) — Faithfulness, context recall and precision, NVIDIA's Ragas metrics, and failure attribution
+- [Agent Benchmarks](concepts/agent-benchmarks.md) (3.1, 3.2) — SWE-bench, τ-bench, GAIA, AgentBench and BFCL, what each measures, and their limits
+- [Synthetic Data for Evaluation](concepts/synthetic-data-for-evaluation.md) (3.1, 3.3) — Generated test sets and simulated users, their biases, and NeMo Data Designer
+- [Agent Profiling and Result Analysis](concepts/agent-profiling-and-result-analysis.md) (3.2, 3.4, 3.5) — The toolkit profiler's outputs, a seven-step procedure from scores to a decision, and error bars on evals
+- [Tuning Agents for Accuracy, Latency and Cost](concepts/agent-tuning-accuracy-latency-cost.md) (3.4, 3.5, 2.6) — Fixing tool choice from trajectories, sampling, automated prompt optimisation, routing (Switchyard), distillation and test-time compute
+- [Feedback Loops and the Data Flywheel](concepts/feedback-loops-and-data-flywheel.md) (3.3, 3.5, 10.2) — Kinds of human and machine feedback, making it trainable, NVIDIA's flywheel, and its risks
+- [Agent Release Management](concepts/agent-release-management.md) (4.2, 8.3, 8.4) — Versioned prompts and model pins with a trace manifest, eval gates in CI, shadow and canary rollout, post-release regression re-runs and rollback
+- [NeMo Evaluator](components/nemo-evaluator.md) (3.1, 3.2) — NVIDIA's benchmark framework and its `nel compare` significance test and `nel gate` release decision; lineage from the toolkit's `nat eval`
+- [NeMo Helix](components/nemo-helix.md) (3.1, 3.4, 3.5, 9.x) — Self-hosted control plane succeeding the toolkit's eval and optimiser: agent runners, optimisation strategies, gateway with routing and rails, garak, fine-tuning; pre-1.0
+- [NVIDIA Data Flywheel Blueprint](components/nvidia-data-flywheel-blueprint.md) (8.4) — Distilling to cheaper models from production logs; deprecated April 2026
+
+## Governance and compliance
+- [EU AI Act](concepts/eu-ai-act.md) (9.5) — Risk tiers, GPAI duties, and the application timeline as amended by the 2026 Digital Omnibus
+- [AI Risk Frameworks and Standards](concepts/ai-risk-frameworks-and-standards.md) (9.5, 9.1) — NIST AI RMF and its GenAI profile, ISO/IEC 42001, and the IEEE 7000 series
+- [FDA AI-Enabled Medical Devices](concepts/fda-ai-enabled-medical-devices.md) (9.5) — The FDA's device list, GMLP and PCCP principles, and draft lifecycle guidance status
+- [Model and Dataset Licensing](concepts/model-and-dataset-licensing.md) (9.5) — NVIDIA Open Model, Llama and Gemma terms, Apache 2.0, and how derived licences stack

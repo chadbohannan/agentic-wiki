@@ -30,7 +30,9 @@ Add other categories (e.g. `runbooks/`, `questions/`) only when pages that do no
 
 Wiki pages are prose documents with no YAML frontmatter. The directory determines the category and the first heading is the title.
 
-Internal links use relative paths and are embedded in context: every link appears inside a sentence that explains why the relationship matters. A link is a claim about a connection, and the surrounding prose is the evidence. There are no "See also" lists. If a relationship cannot be explained in a sentence, it is not meaningful enough to link.
+Internal links use relative paths and are embedded in context: every link appears inside a sentence that explains why the relationship matters. A link is a claim about a connection, and the surrounding prose is the evidence. There are no "See also" lists, including the prose kind: a paragraph near the top that only lists related pages ("X is covered in [A], Y in [B]") is a See-also list and is not allowed. Place each link at the point in the body where the relationship does work. If a relationship cannot be explained in a sentence, it is not meaningful enough to link.
+
+Pages are written one per concept, not one per exam objective. When two objectives touch the same concept, they share a page; the mapping from objectives to pages lives in `syntheses/exam-blueprint.md` and as IDs in `index.md`, so pages do not open with "This page covers exam objective X".
 
 Each page ends with a table of references that corroborates `log.md`: one row per source with the date of its most recent impact on the page.
 
@@ -51,11 +53,14 @@ Only files in `sources/` and properly formed URLs are written as links. Paths ou
 
 ### Provenance
 
-Attribution is inline, in natural language, so the reader sees what claim a source supports: "According to NVIDIA's AI Factory white paper...". In addition, mark the epistemic status of substantive claims, because this wiki mixes study-guide references, added web research and synthesis:
+Attribution is inline, in natural language, so the reader sees what claim a source supports: "According to NVIDIA's AI Factory white paper...". In addition, tags mark where outside evidence enters, because this wiki mixes study-guide references with added web research:
 
 - **[sourced]** — stated by a source in `sources.md`.
 - **[web]** — from a source found during gap-filling; cite the URL.
-- **[inferred]** — the LLM's synthesis, not stated by any source.
+
+Untagged prose is the wiki's own reasoning: trade-offs, recommendations and synthesis. That is the default voice of an LLM-written wiki, so it carries no tag. The consequence is a writing rule: a sentence that reads as a fact (a version, a number, a behaviour, a date, an absence such as "NVIDIA has no X") must either carry a tag or be worded as judgment ("in practice", "probably", "the safer reading is"). Where reasoning builds on a source, put the tag on the sourced sentence and let the inference follow in words ("which suggests...").
+
+A tag ends the sentence it supports. When consecutive sentences rest on the same evidence, one tag at the end of the run covers them, and the prose should make the run clear, for example by opening with the attribution. Tags may be combined (`[sourced, web]`), and `snippet` may be appended (`[web, snippet]`) when a claim rests only on a search snippet or summary. No other words go inside a tag. Caveats that change how far a claim can be trusted (a vendor's own benchmark, a single secondary source, conflicting reports) belong in the sentence, where the reader sees them. Notes about the research process (what was fetched, what returned 403, what was read in full) belong in `log.md`, `TODO.md` or `sources.md`, never on a page.
 
 Say so when a claim rests on a single source, a search snippet, or a vendor's own benchmark. Treat Medium posts and vendor blogs as leads and ground claims in primary sources (docs, papers, specs) where possible.
 
@@ -71,15 +76,15 @@ Filenames are lowercase, hyphenated and descriptive.
 
 Every sentence should earn its place. A short, precise page is better than a long, vague one. Prefer prose to bullet fragments; use a list only for genuinely parallel items.
 
-Be explicit about scope and time. This field moves fast and the study guide is from September 2025: state product names and versions as of the date checked, and say whether a behavior is spec-defined or specific to one vendor or implementation.
+Be explicit about scope and time. This field moves fast and the study guide is from September 2025: state product names and versions as of the date checked, and say whether a behavior is spec-defined or specific to one vendor or implementation. The reference table's ingest date is the page's "as of" date, so headings and routine prose carry no date stamps; a page states a product's version once, near the top. Product status, deprecations and successors are recorded in `syntheses/nvidia-agentic-stack.md`; other pages mention a deprecation only where it changes the advice on that page, and link there rather than restating dates.
 
-Each concept page ends, before the reference table, with an **Interview Q&A** section: a few likely questions with concise answers.
+Each concept page ends, before the reference table, with an **Interview Q&A** section: a few likely questions with concise answers (four or more on component pages). When a concept has an NVIDIA implementation, it is described in a section headed `## In NVIDIA's stack`, placed immediately before Interview Q&A, so the interview angle is always in the same place.
 
 When new information contradicts existing wiki content, including the study guide, do not silently overwrite. Note the contradiction, cite both sources, and flag it to the user. Prefer the newer or more authoritative source in the page text, and record the disagreement.
 
 ## The Index
 
-`wiki/index.md` is the routing layer and the first thing read when answering a query. Each entry is a link with a one-line description, grouped by category; the description should say enough to triage without opening the page. Exam objective IDs (e.g. `1.4`) may be added in parentheses so the index can be scanned by blueprint section. The index is updated on every ingest. Do not list source material in it.
+`wiki/index.md` is the routing layer and the first thing read when answering a query. Each entry is a link with a one-line description, grouped by the seven parts of an agent defined in `syntheses/agent-anatomy.md` (model, context, tools, loop and harness, memory and state, environment, control and observation), plus syntheses and governance; the description should say enough to triage without opening the page. Exam objective IDs (e.g. `1.4`) may be added in parentheses so the index can be scanned by blueprint section. The index is updated on every ingest. Do not list source material in it.
 
 ## The Log
 
@@ -124,11 +129,12 @@ When asked for a health check, or periodically as the wiki grows:
 3. Identify **mentioned-but-missing** entities that deserve a page (e.g. NIM, Triton, TensorRT-LLM, NeMo Guardrails).
 4. Flag **stale pages**: product names, versions, deprecations and protocol specs that have likely moved. Re-check these against primary sources.
 5. Flag claims that rest only on **search snippets** or vendor self-reported numbers, and verify or soften them.
-6. Verify **link integrity**: internal links resolve, and `sources/` links exist.
-7. Verify that every `ingested` row in `sources.md` is cited by at least one page's reference table.
-8. Suggest new questions or sources that would fill gaps.
-9. Fix what can be fixed, report the rest, and log the pass.
+6. Flag **untagged factual claims**: sentences that read as facts but carry no tag. Source them or reword them as judgment.
+7. Verify **link integrity**: internal links resolve, and `sources/` links exist.
+8. Verify that every `ingested` row in `sources.md` is cited by at least one page's reference table.
+9. Suggest new questions or sources that would fill gaps.
+10. Fix what can be fixed, report the rest, and log the pass.
 
 ### Enrich
 
-When a page would benefit from deeper context: search for primary sources (papers, specs, vendor docs, repositories), integrate findings as prose with citations, upgrade snippet-level claims to read-in-full ones, and log the enrichment. If NVIDIA repositories (NeMo Agent Toolkit, NeMo Guardrails, TensorRT-LLM) are indexed in `code-rag`, use it to ground component pages in actual code and configuration; check with `list_repos` first.
+When a page would benefit from deeper context: search for primary sources (papers, specs, vendor docs, repositories), integrate findings as prose with citations, upgrade snippet-level claims to read-in-full ones, and log the enrichment. Ground component pages for NVIDIA open-source projects (NeMo Agent Toolkit, NeMo Guardrails, TensorRT-LLM) in their repositories' docs and example configurations.
