@@ -146,6 +146,17 @@ Actionable gaps collected from the ingest of sections 1-8 and 10 (2026-10-28). I
 ### Core agent engineering (added 2026-10-28)
 
 - [ ] **Sandboxing and code execution** deserves its own concept page: the anatomy page's environment part rests on one Anthropic post; add OS-level versus container versus microVM isolation, E2B/Modal-style hosted sandboxes, and Helix's sandbox plugin (`syntheses/agent-anatomy.md`).
-- [ ] **Computer-use and browser agents**, **coding agents** and a **framework/SDK comparison** (LangGraph, OpenAI Agents SDK, Claude Agent SDK, CrewAI) have no pages.
+- [ ] **Computer-use and browser agents** and **coding agents** have no pages. LangGraph, the OpenAI Agents SDK and CrewAI now have component pages (2026-10-28); `syntheses/choosing-an-agent-framework.md` now covers selection considerations; a Claude Agent SDK page is still missing.
 - [ ] **NeMo Fabric** is the toolkit's runtime successor and the natural NVIDIA home for the harness; no docs read yet.
 - [ ] **Context engineering primary research**: Manus's numbers are a vendor's self-report and LangChain's "3x tool selection from tool RAG" claim cites unnamed papers (left off the page); find the RAG-MCP or tool-retrieval paper.
+
+## Framework pages (added 2026-10-28)
+
+- [ ] **LangGraph durability modes** and checkpointer details remain unconfirmed (the durable-execution page does not cover them); read the checkpointers guide before stating them on `components/langgraph.md` or `concepts/stateful-orchestration.md`.
+- [ ] **CrewAI hierarchical manager.** The docs do not describe the manager's delegation tools or how it validates results; read the source or a primary description before claiming more (`components/crewai.md`).
+- [ ] **CrewAI memory.** The crew-level `memory` wording (short-term, long-term, entity) predates the unified `Memory` class; check which the current Crew actually uses.
+- [ ] **NIM and the Responses API.** Check whether a NIM supports the Responses API or only chat completions before recommending it with the OpenAI Agents SDK (`components/openai-agents-sdk.md`).
+- [ ] **NVIDIA support for CrewAI and the Agents SDK** after the toolkit's deprecation: Relay's integration list names LangChain, LangGraph and Deep Agents only.
+- [ ] **Agents SDK 0.x.** Pre-1.0, so re-check handoff, guardrail and session behaviour on each release; the models page names an OpenAI default model that was not recorded.
+- [ ] **CrewAI default model.** The agents page lists a `gpt-4` default while the LLMs page says an unprefixed `gpt-4` is incorrect; confirm the actual default.
+- [ ] **Selection page evidence.** `syntheses/choosing-an-agent-framework.md` rests on vendor documentation plus the wiki's judgment; no independent comparison or production report has been read. LangGraph deployment options beyond LangSmith Deployment are unverified.

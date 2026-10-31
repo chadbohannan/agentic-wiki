@@ -1,9 +1,10 @@
 # Wiki Index
 
-Pages are grouped by the seven parts of an agent set out in [Anatomy of an Agent](syntheses/agent-anatomy.md): model, context, tools, loop and harness, memory and state, environment, and control and observation, followed by governance, which sits outside the agent. Concept and component pages share each group; components are NVIDIA products and live under `components/`. Exam objective IDs from the NCP-AAI study guide are in parentheses; [NCP-AAI Exam Blueprint](syntheses/exam-blueprint.md) maps objectives to pages and records the guide's errors, and `../TODO.md` lists open gaps.
+Pages are grouped by the seven parts of an agent set out in [Anatomy of an Agent](syntheses/agent-anatomy.md): model, context, tools, loop and harness, memory and state, environment, and control and observation, followed by governance, which sits outside the agent. Concept and component pages share each group; components are NVIDIA products plus the third-party frameworks the exam's stack builds on, and live under `components/`. Exam objective IDs from the NCP-AAI study guide are in parentheses; [NCP-AAI Exam Blueprint](syntheses/exam-blueprint.md) maps objectives to pages and records the guide's errors, and `../TODO.md` lists open gaps.
 
 ## Syntheses
 - [Anatomy of an Agent](syntheses/agent-anatomy.md) — The conceptual spine: the seven parts, how each fails, where a responsibility should live, and diagnosing a failure by part
+- [Choosing an Agent Framework](syntheses/choosing-an-agent-framework.md) — Selection considerations for LangGraph, OpenAI Agents SDK and CrewAI: durability, control flow, topology, guardrail placement, provider and trace lock-in, maturity
 - [NVIDIA Agentic Stack](syntheses/nvidia-agentic-stack.md) — One agent request traced through NVIDIA's layers, plus every product's status and lineage as of October 2026
 - [NCP-AAI Exam Blueprint](syntheses/exam-blueprint.md) — The ten exam sections mapped to wiki pages, with weight discrepancies and broken study-guide references
 
@@ -53,6 +54,9 @@ Pages are grouped by the seven parts of an agent set out in [Anatomy of an Agent
 - [Multi-Agent Orchestration](concepts/multi-agent-orchestration.md) (1.5) — Supervisor, hierarchical, decentralised and federated topologies, their costs, and the frameworks implementing them
 - [Agent Error Handling and Resilience](concepts/agent-error-handling-resilience.md) (2.4) — Retries with backoff, idempotency, circuit breakers, fallbacks, and agent-specific failure classes
 - [Streaming and Real-Time Agent UX](concepts/streaming-and-realtime-agent-ux.md) (2.5) — What to stream, LangGraph stream modes, and streaming's conflicts with retries and guardrails
+- [LangGraph](components/langgraph.md) — Graph and functional APIs, reducers, `Send` and `Command`, subgraph persistence modes, LangSmith tracing; how NVIDIA's blueprints use it
+- [OpenAI Agents SDK](components/openai-agents-sdk.md) — Agents, handoffs versus agents-as-tools, the run loop and `max_turns`, guardrail placement limits, sessions, tracing
+- [CrewAI](components/crewai.md) — Role-based crews (sequential or hierarchical) inside event-driven Flows, task guardrails, unified memory, tool failure policy
 - [NeMo Agent Toolkit (and its deprecation)](components/nemo-agent-toolkit.md) (2.3, 2.4, 2.6, 7.3) — The exam's agent framework: YAML workflows, agent types, eval and profiler; deprecated October 2026
 - [AI-Q Blueprint](components/ai-q-blueprint.md) (4.1) — NVIDIA's research agent: intent router, shallow and deep agents, Compose and Helm deployment
 

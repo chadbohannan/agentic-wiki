@@ -1,6 +1,6 @@
 # Stateful Orchestration
 
-Stateful orchestration runs an agent as a graph whose shared state is checkpointed as it executes, which allows loops, branching, pausing for a human and resuming after a failure. LangGraph is the reference implementation here because NVIDIA's own blueprints build on it.
+Stateful orchestration runs an agent as a graph whose shared state is checkpointed as it executes, which allows loops, branching, pausing for a human and resuming after a failure. [LangGraph](../components/langgraph.md) is the reference implementation here because NVIDIA's own blueprints build on it.
 
 ## Why a graph rather than a chain
 
